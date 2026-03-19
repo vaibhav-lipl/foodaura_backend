@@ -24,6 +24,10 @@ const DeliveryPartnerPayoutMethod = require('./DeliveryPartnerPayoutMethod');
 const DeliveryPartnerSchedule = require('./DeliveryPartnerSchedule');
 const DeliveryPartnerLocation = require('./DeliveryPartnerLocation');
 const DeliveryPartnerRating = require('./DeliveryPartnerRating');
+const FAQModule = require('./FAQModule');
+const FAQ = require('./FAQ');
+const SupportTicket = require('./SupportTicket');
+const SupportTicketMessage = require('./SupportTicketMessage');
 
 
 // Define associations
@@ -117,6 +121,18 @@ DeliveryPartnerRating.belongsTo(Order, { foreignKey: 'orderId', as: 'order' });
 Order.belongsTo(User, { foreignKey: 'deliveryPartnerId', as: 'deliveryPartner' });
 User.hasMany(Order, { foreignKey: 'deliveryPartnerId', as: 'deliveryPartnerOrders' });
 
+// FAQ associations
+FAQModule.hasMany(FAQ, { foreignKey: 'moduleId', as: 'faqs' });
+FAQ.belongsTo(FAQModule, { foreignKey: 'moduleId', as: 'faqModule' });
+
+// Support ticket associations
+User.hasMany(SupportTicket, { foreignKey: 'userId', as: 'supportTickets' });
+SupportTicket.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+SupportTicket.hasMany(SupportTicketMessage, { foreignKey: 'ticketId', as: 'messages' });
+SupportTicketMessage.belongsTo(SupportTicket, { foreignKey: 'ticketId', as: 'ticket' });
+User.hasMany(SupportTicketMessage, { foreignKey: 'senderId', as: 'supportTicketMessages' });
+SupportTicketMessage.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
+
 module.exports = {
   sequelize,
   User,
@@ -143,6 +159,9 @@ module.exports = {
   DeliveryPartnerPayoutMethod,
   DeliveryPartnerSchedule,
   DeliveryPartnerLocation,
-  DeliveryPartnerRating
+  DeliveryPartnerRating,
+  FAQModule,
+  FAQ,
+  SupportTicket,
+  SupportTicketMessage
 };
-

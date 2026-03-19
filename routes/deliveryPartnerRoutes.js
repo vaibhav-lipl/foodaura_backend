@@ -46,8 +46,9 @@ const deliveryPartnerScheduleController = require('../controllers/deliveryPartne
 const deliveryPartnerPayoutController = require('../controllers/deliveryPartnerPayoutController');
 const deliveryPartnerLocationController = require('../controllers/deliveryPartnerLocationController');
 const deliveryPartnerDashboardController = require('../controllers/deliveryPartnerDashboardController');
-const deliveryPartnerHelpController = require('../controllers/deliveryPartnerHelpController');
 const customerNotificationController = require('../controllers/customerNotificationController');
+const faqController = require('../controllers/faqController');
+const supportTicketController = require('../controllers/supportTicketController');
 
 // ==================== AUTHENTICATION ROUTES ====================
 router.post('/auth/login/otp', deliveryPartnerAuthController.requestOTP);
@@ -119,11 +120,10 @@ router.get('/notifications/unread-count', authenticate, isDeliveryPartner, custo
 router.get('/dashboard', authenticate, isDeliveryPartner, deliveryPartnerDashboardController.getDashboard);
 
 // ==================== HELP & SUPPORT ROUTES ====================
-router.get('/help/faqs', authenticate, isDeliveryPartner, deliveryPartnerHelpController.getFAQs);
-router.post('/help/support-tickets', authenticate, isDeliveryPartner, deliveryPartnerHelpController.submitSupportTicket);
-router.get('/help/support-tickets', authenticate, isDeliveryPartner, deliveryPartnerHelpController.getSupportTickets);
-router.get('/help/support-tickets/:ticketId', authenticate, isDeliveryPartner, deliveryPartnerHelpController.getSupportTicketDetails);
-router.post('/help/support-tickets/:ticketId/reply', authenticate, isDeliveryPartner, deliveryPartnerHelpController.replyToTicket);
+router.get('/help/faqs', authenticate, isDeliveryPartner, faqController.getDeliveryPartnerFAQs);
+router.post('/help/support-tickets', authenticate, isDeliveryPartner, supportTicketController.submitSupportTicket);
+router.get('/help/support-tickets', authenticate, isDeliveryPartner, supportTicketController.getSupportTickets);
+router.get('/help/support-tickets/:ticketId', authenticate, isDeliveryPartner, supportTicketController.getSupportTicketDetails);
+router.post('/help/support-tickets/:ticketId/reply', authenticate, isDeliveryPartner, supportTicketController.replyToTicket);
 
 module.exports = router;
-

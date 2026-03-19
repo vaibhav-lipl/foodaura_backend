@@ -34,6 +34,8 @@ const customerPopularController = require('../controllers/customerPopularControl
 const customerSearchController = require('../controllers/customerSearchController');
 const customerNotificationController = require('../controllers/customerNotificationController');
 const customerReviewController = require('../controllers/customerReviewController');
+const faqController = require('../controllers/faqController');
+const supportTicketController = require('../controllers/supportTicketController');
 
 // ==================== AUTHENTICATION ROUTES ====================
 router.post('/auth/send-otp', sendOTPValidation, customerAuthController.sendOTP);
@@ -123,6 +125,13 @@ router.post('/delivery-partner-reviews', authenticate, submitDeliveryPartnerRevi
 
 // ==================== SETTINGS ROUTES ====================
 router.get('/settings', authenticate, settingController.getSettings);
+router.get('/faqs', optionalAuth, faqController.getCustomerFAQs);
+
+// ==================== HELP & SUPPORT ROUTES ====================
+router.post('/help/support-tickets', authenticate, supportTicketController.submitSupportTicket);
+router.get('/help/support-tickets', authenticate, supportTicketController.getSupportTickets);
+router.get('/help/support-tickets/:ticketId', authenticate, supportTicketController.getSupportTicketDetails);
+router.post('/help/support-tickets/:ticketId/reply', authenticate, supportTicketController.replyToTicket);
 
 // ==================== DELIVERY PARTNER ROUTES ====================
 router.get('/delivery-partners-current-location', authenticate, customerOrderController.getDeliveryPartnersCurrentLocation);

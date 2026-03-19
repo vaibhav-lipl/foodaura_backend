@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
+const faqController = require('../controllers/faqController');
+const supportTicketController = require('../controllers/supportTicketController');
 const settingController = require('../controllers/settingController');
 const { authenticate, isAdmin } = require('../middleware/auth');
 const { body } = require('express-validator');
@@ -50,10 +52,26 @@ router.put('/delivery-partners/:id/status', [
 ], adminController.updateDeliveryPartnerStatus);
 router.get('/delivery-partners/:userId', adminController.getDeliveryPartnerDetails);
 
+// FAQ Module Management
+router.get('/faq-modules', faqController.getFAQModules);
+router.post('/faq-modules', faqController.createFAQModule);
+router.put('/faq-modules/:id', faqController.updateFAQModule);
+router.delete('/faq-modules/:id', faqController.deleteFAQModule);
+
+// FAQ Management
+router.get('/faqs', faqController.getAdminFAQs);
+router.post('/faqs', faqController.createFAQ);
+router.put('/faqs/:id', faqController.updateFAQ);
+router.delete('/faqs/:id', faqController.deleteFAQ);
+
+// Support Ticket Management
+router.get('/support-tickets', supportTicketController.getAdminSupportTickets);
+router.get('/support-tickets/:id', supportTicketController.getAdminSupportTicketDetails);
+router.post('/support-tickets/:id/reply', supportTicketController.replyToSupportTicketAsAdmin);
+router.put('/support-tickets/:id/status', supportTicketController.updateSupportTicketStatus);
 
 // Settings Management
 router.get('/settings', settingController.getSettings);
 router.put('/settings', settingController.updateSettings);
 
 module.exports = router;
-
