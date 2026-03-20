@@ -264,7 +264,7 @@ exports.createOrder = async (req, res, next) => {
       message: `You have a new order of Rs. ${order.total}. Check now.`,
       type: 'order',
       orderId: order.id,
-      actionUrl: `/restaurant/orders/${order.id}`,
+      actionUrl: `/orders/${order.id}`,
       isRead: false,
     })
     await Notification.create({
